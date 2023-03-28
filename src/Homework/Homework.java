@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
 import java.time.temporal.ChronoUnit;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Homework {
@@ -68,18 +70,21 @@ public class Homework {
         System.out.println (end.toEpochDay()-start.toEpochDay());//7
 
 
-        List<LocalDate> date = List.of(LocalDate.of(2023, Month.MARCH,01),
-                (LocalDate.of(2023,Month.MARCH,27)));
-        System.out.println(returnNumberOfDays(date));//26
+        List<LocalDate> date = new LinkedList<>();
+        Collections.addAll(date,
+                LocalDate.now(),
+                LocalDate.now().plusDays(10),
+                LocalDate.now().plusDays(20),
+                LocalDate.now().plusWeeks(6),
+                LocalDate.now().plusYears(1));
+
+        System.out.println(daysInBetween(date));//366
+        Collections.sort(date);
+        System.out.println(date);
     }
-    public static int returnNumberOfDays(List<LocalDate> localDates){
-        int numberOfDays=0;
-        for(int i=0; i<localDates.size(); i++){
-            LocalDate start = localDates.get(0);
-            LocalDate end = localDates.get(1);
-            numberOfDays= (int) (end.toEpochDay()-start.toEpochDay());
-        }
-       return numberOfDays;
+    public static long daysInBetween(List<LocalDate> localDates){
+        Collections.sort(localDates);
+       return ChronoUnit.DAYS.between(localDates.get(0),localDates.get(localDates.size()-1));
     }
 
 }
